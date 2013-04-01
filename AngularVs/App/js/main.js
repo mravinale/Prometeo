@@ -1,25 +1,32 @@
-var Site = angular.module('Site', []);
+var app = angular.module('AngularVs', []);
 
-Site.config(function ($routeProvider) {
+app.config(function ($routeProvider) {
     $routeProvider
       .when('/:page', { templateUrl: 'App/partials/page.html', controller: 'RouteController' })
       .otherwise({ redirectTo: '/home' });
 });
 
-function AppController($scope) {
-    
+app.controller('MainController', function ($scope) {
     // Set the selected page for menu active class
     $scope.$on('dataLoaded', function (event, args) {
         $scope.selectedPage = args.selectedPage;
     });
-}
+});
 
-function RouteController($scope, $rootScope, $http, $routeParams) {
+app.controller('RouteController', function ($scope, $routeParams, pageService) {
+    pageService.load($scope, $routeParams.page);
+});
 
-    // Load data infromation about the pages on startup
-    $http.get('api/values').success(function (data) {
-        $scope.page = data[$routeParams.page];
-        $scope.$emit('dataLoaded', { selectedPage: $routeParams.page });
-    });
+app.factory('pageService', function ($http) {
+    return {
+        load: function (model, page) {
+            $http.get('api/values').success(function (data) {
+                model.page = data[page];
+                model.$emit('dataLoaded', { selectedPage: page });
+            });
+        }
+    };
+});
 
-}
+
+
