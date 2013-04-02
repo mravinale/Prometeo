@@ -1,0 +1,56 @@
+﻿<!DOCTYPE HTML>
+<html lang="en-US" ng-app="Prometeo">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular Lander</title>
+    
+     <!-- Styles Includes -->
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+</head>
+<body ng-controller="MainController">
+
+    <!-- Navigation -->
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="brand" href="#/home">Angular Lander</a>
+                <ul class="nav">
+                    <li ng-class="{active: selectedPage == 'home'}"><a href="#/home">Home</a></li>
+                    <li ng-class="{active: selectedPage == 'contact'}"><a href="#/contact">Contact</a></li>
+                    <li ng-class="{active: selectedPage == 'about'}"><a href="#/about">About</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="container">
+        <div class="row">
+            
+            <!-- pages -->
+            <div class="span8">
+                <ng-view></ng-view>
+            </div>
+            
+            <!-- Side Bar -->
+            <div ng-hide="selectedPage == 'home'" class="span4">
+                <div class="well">
+                    <h3>Side Bar</h3>
+                    <p>Static side bar that will stay the same between pages.</p>
+                    <h4>Angular Links</h4>
+                    <ul>
+                        <li><a href="http://angularjs.org">Angular Main page</a></li>
+                        <li><a href="http://docs.angularjs.org/tutorial">Angular Tutorials</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- JavaScript Includes -->
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/App/js/main.js"></script>
+</body>
+</html>
