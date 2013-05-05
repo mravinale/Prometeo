@@ -1,28 +1,40 @@
-var app = angular.module('Prometeo', []);
+var app = angular.module('Prometeo', ['ui', '$strap.directives']);
 
 app.config(function ($routeProvider) {
     $routeProvider
-      .when('/:page', { templateUrl: 'App/partials/page.html', controller: 'RouteController' })
-      .otherwise({ redirectTo: '/home' });
+        .when('/home', { templateUrl: 'App/partials/home.html', controller: 'homeController' })
+        .when('/contact', { templateUrl: 'App/partials/contact.html', controller: 'contactController' })
+        .when('/about', { templateUrl: 'App/partials/about.html', controller: 'aboutController' })
+        .otherwise({ redirectTo: '/home' });
 });
 
-app.controller('MainController', function ($scope) {
-    // Set the selected page for menu active class
-    $scope.$on('dataLoaded', function (event, args) {
-        $scope.selectedPage = args.selectedPage;
-    });
+app.value('ui.config', {
+    jq: {
+        cslider: { autoplay: true, bgincrement: 450 }
+    }
 });
 
-app.controller('RouteController', function ($scope, $routeParams, pageService) {
-    pageService.load($scope, $routeParams.page);
+app.controller('mainController', function ($scope, $location) {
+    $scope.$location = $location;
 });
 
-app.factory('pageService', function ($http) {
+app.controller('homeController', function ($scope, pageService) {
+    
+});
+
+app.controller('contactController', function ($scope, pageService) {
+    
+});
+
+app.controller('aboutController', function ($scope, pageService) {
+    
+});
+
+app.service('pageService', function ($http) {
     return {
         load: function (model, page) {
             $http.get('api/values').success(function (data) {
-                model.page = data[page];
-                model.$emit('dataLoaded', { selectedPage: page });
+                model.page = data[page]; 
             });
         }
     };

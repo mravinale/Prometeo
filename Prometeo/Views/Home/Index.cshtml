@@ -1,56 +1,51 @@
 ﻿<!DOCTYPE HTML>
 <html lang="en-US" ng-app="Prometeo">
-<head>
-    <meta charset="UTF-8">
-    <title>Angular Lander</title>
+    <head>
+        <meta charset="UTF-8">
+        <title>Prometeo</title>
     
-     <!-- Styles Includes -->
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/Content/Site.css" rel="stylesheet" />
-</head>
-<body ng-controller="MainController">
+        <!-- Styles Includes -->
+        <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/Content/bootstrap-responsive.css" rel="stylesheet" />
+        <link href="~/Content/Site.css" rel="stylesheet" />
+        
+        <link href="~/Content/jquery.parallax.css" rel="stylesheet" />
+    </head>
+
+<body ng-controller="mainController">
 
     <!-- Navigation -->
-    <div class="navbar navbar-fixed-top">
+    <div class="navbar navbar-fixed-top" bs-navbar>
         <div class="navbar-inner">
             <div class="container">
-                <a class="brand" href="#/home">Angular Lander</a>
+                <a class="brand" href="#/home">Prometeo</a>
                 <ul class="nav">
-                    <li ng-class="{active: selectedPage == 'home'}"><a href="#/home">Home</a></li>
-                    <li ng-class="{active: selectedPage == 'contact'}"><a href="#/contact">Contact</a></li>
-                    <li ng-class="{active: selectedPage == 'about'}"><a href="#/about">About</a></li>
+                    <li data-match-route="/home"><a href="#/home">Home</a></li>
+                    <li data-match-route="/contact"><a href="#/contact">Contact</a></li>
+                    <li data-match-route="/about"><a href="#/about">About</a></li>
                 </ul>
             </div>
         </div>
     </div>
 
-    <!-- Content -->
-    <div class="container">
-        <div class="row">
-            
-            <!-- pages -->
-            <div class="span8">
-                <ng-view></ng-view>
-            </div>
-            
-            <!-- Side Bar -->
-            <div ng-hide="selectedPage == 'home'" class="span4">
-                <div class="well">
-                    <h3>Side Bar</h3>
-                    <p>Static side bar that will stay the same between pages.</p>
-                    <h4>Angular Links</h4>
-                    <ul>
-                        <li><a href="http://angularjs.org">Angular Main page</a></li>
-                        <li><a href="http://docs.angularjs.org/tutorial">Angular Tutorials</a></li>
-                    </ul>
-                </div>
-            </div>
-
+   <!-- Content -->
+   <div class="container-fluid" id="main">
+        <div class="row-fluid">
+		    <!-- pages -->
+            <ng-view></ng-view>
         </div>
-    </div>
+    </div> 
 
     <!-- JavaScript Includes -->
-    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/jquery-1.9.1.min.js"></script>
+    <script src="~/Scripts/modernizr-2.5.3.js"></script>
+    <script src="~/Scripts/jquery.cslider.js"></script>
+
+    <script src="~/Scripts/angular.min.js"></script>   
+    <script src="~/Scripts/angular-ui.js"></script>
+    <script src="~/Scripts/angular-strap.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+   
     <script src="~/App/js/main.js"></script>
 </body>
 </html>
