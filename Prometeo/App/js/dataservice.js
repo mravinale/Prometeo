@@ -14,27 +14,41 @@ app.factory('dataservice', function (breeze, model, jsonResultsAdapter) {
     });
 
     var manager = new breeze.EntityManager({ dataService: dataService });
-    
+     
     model.initialize(manager.metadataStore);
    
     return { 
         getPage: getPage,
-        getComments: getComments
+        getComments: getComments,
+        onEntityChange: onEntityChange
     };
       
     /*** implementation details ***/
+    
+    function onEntityChange(callback) {
+        manager.entityChanged.subscribe(callback);
+    }
      
     function getPage() {
         var query = breeze.EntityQuery.from("GetPage");
-        return manager.executeQuery(query).then(returnResults);
+        return manager.executeQuery(query).then(returnResults) ;
     }
     
     function getComments() {
         var query = breeze.EntityQuery.from("GetComments");
-        return manager.executeQuery(query).then(returnResults);
+        return manager.executeQuery(query).then(returnResults) ;
     }
     //#endregion
     
-    function returnResults(data) { return data.results[0];}
+    function getCustomQueryFromCache() {
+        var query = breeze.EntityQuery.from("GetPage").toType("Page");
+        var page = manager.executeQueryLocally(query)[0];
+
+        return page;
+    }
+    
+    
+    function returnResults(data) { return data.results[0]; }
+     
 
 });

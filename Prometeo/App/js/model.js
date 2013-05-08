@@ -19,6 +19,7 @@ app.factory('model', function () {
             navigationProperties: { 
                 posts: { entityTypeName: "Post:#Prometeo", isScalar: false, associationName: "Page_Posts" }
             }
+            // propertyChanged.subscribe(function (changeArgs) { $scope.$apply(); console.log(changeArgs); })
         });
 
         metadataStore.addEntityType({

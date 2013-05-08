@@ -6,6 +6,7 @@ app.config(function ($routeProvider) {
         .when('/blog', { templateUrl: 'App/partials/blog.html', controller: 'blogController' })
         .when('/about', { templateUrl: 'App/partials/about.html', controller: 'aboutController' })
         .otherwise({ redirectTo: '/home' });
+    
 });
 
 app.value('ui.config', {
@@ -14,8 +15,14 @@ app.value('ui.config', {
     }
 });
 
-app.controller('mainController', function ($scope, $location) {
+app.controller('mainController', function ($scope, $location, dataservice) {
+    
     $scope.$location = $location;
+    
+    dataservice.onEntityChange(function (args) {
+        $scope.$apply();
+       // console.log(args);
+    });
 });
 
 app.controller('homeController', function ($scope) {
@@ -25,7 +32,7 @@ app.controller('homeController', function ($scope) {
 app.controller('blogController', function ($scope, breeze, dataservice) {
 
     var pageEntity = null;
-
+    
     dataservice.getPage().then(function(page) {
         pageEntity = page;
         dataservice.getComments().then(succeeded);
@@ -34,8 +41,8 @@ app.controller('blogController', function ($scope, breeze, dataservice) {
     function succeeded(data) {
         $scope.data = pageEntity;
         
-        $scope.$apply();
-        console.log($scope.data);
+        //modify an entity
+        pageEntity.title = "hello";
     }
    
 });
