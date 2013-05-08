@@ -134,9 +134,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\js\dataservice.js" />
+    <Content Include="App\js\jsonResultsAdapter.js" />
     <Content Include="App\js\main.js" />
+    <Content Include="App\js\model.js" />
     <Content Include="App\partials\home.html" />
-    <Content Include="App\partials\contact.html" />
+    <Content Include="App\partials\blog.html" />
     <Content Include="Content\bootstrap-responsive.css" />
     <Content Include="Content\bootstrap-responsive.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -232,6 +235,12 @@
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\breeze.base.debug.js" />
+    <Content Include="Scripts\breeze.base.min.js" />
+    <Content Include="Scripts\breeze.debug.js" />
+    <None Include="Scripts\breeze.intellisense.js" />
+    <Content Include="Scripts\breeze.min.js" />
+    <Content Include="Scripts\breeze.savequeuing.js" />
     <Content Include="Scripts\i18n\angular-locale_am-et.js" />
     <Content Include="Scripts\i18n\angular-locale_am.js" />
     <Content Include="Scripts\i18n\angular-locale_ar-eg.js" />
@@ -403,6 +412,8 @@
     <Content Include="Scripts\jstd-scenario-adapter-config.js" />
     <Content Include="Scripts\jstd-scenario-adapter.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Scripts\q.js" />
+    <Content Include="Scripts\q.min.js" />
     <Content Include="Scripts\ui-bootstrap-0.2.0.js" />
     <Content Include="Scripts\ui-bootstrap-0.2.0.min.js" />
     <Content Include="Scripts\ui-bootstrap-tpls-0.2.0.js" />
