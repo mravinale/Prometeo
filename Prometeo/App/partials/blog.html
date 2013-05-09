@@ -4,18 +4,55 @@
 </div>
 
 <div class="well well-large">
-   [{"id":1,"content":"Comment1","post_id":1},{"id":2,"content":"Comment2","post_id":1},{"id":3,"content":"Comment3","post_id":2},{"id":4,"content":"Comment4","post_id":3},{"id":5,"content":"Comment5","post_id":3}]
+    [{"id":1,"content":"Comment1","post_id":1},{"id":2,"content":"Comment2","post_id":1},{"id":3,"content":"Comment3","post_id":2},{"id":4,"content":"Comment4","post_id":3},{"id":5,"content":"Comment5","post_id":3}]
 </div>
 
-<h2>[Page] - {{data.title}}</h2>  
 
-<ul>
-    <li ng-repeat="post in data.posts">
-        <h3>[Post]- {{post.name}}</h3>
-        <ul>
-            <li ng-repeat="comment in post.comments">
-                <h4>[Comment] - {{comment.content}}</h4> 
-            </li>
-        </ul> 
-    </li>
-</ul>
+<div class="container-fluid">
+    
+    <div class="row-fluid">
+        <div class="span6">
+            <div class="well well-large">
+                <form class="form-horizontal">
+                     <div class="control-group">
+                        <label class="control-label" for="inputPage">Page</label>
+                        <div class="controls">
+                            <input type="text" ng-model="newPageName" id="inputPage" placeholder="Page">
+                            <button type="submit" class="btn"  ng-click="changePage()">Change!</button>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="inputPosts">Posts</label>
+                        <div class="controls">
+                            <input type="text" ng-model="newPostName" id="inputPosts" placeholder="Posts">
+                            <button type="submit" class="btn"  ng-click="changePosts()">Change!</button>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="inputComments">Comments</label>
+                        <div class="controls">
+                            <input type="text" ng-model="newCommentName" id="inputComments" placeholder="Comments">
+                            <button type="submit" class="btn"  ng-click="changeComments()">Change!</button>
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+
+        <div class="span6">
+            <h2>[Page] - {{data.title}}</h2>
+            <ul>
+                <li ng-repeat="post in data.posts">
+                    <h3>[Post]- {{post.name}}</h3>
+                    <ul>
+                        <li ng-repeat="comment in post.comments">
+                            <h4>[Comment] - {{comment.content}}</h4>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</div>

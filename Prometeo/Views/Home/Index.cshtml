@@ -38,7 +38,7 @@
 
     <!-- JavaScript Includes -->
     <script src="~/Scripts/jquery-1.9.1.min.js"></script> 
-   
+    <script src="~/Scripts/jquery.signalR-1.0.1.min.js"></script>
 
     <script src="~/Scripts/q.min.js"></script> 
     <script src="~/Scripts/breeze.debug.js"></script>
@@ -59,6 +59,7 @@
     <script src="~/App/js/model.js"></script>
     <script src="~/App/js/jsonResultsAdapter.js"></script>
     
+     @Scripts.Render("~/signalr/hubs")
 
     
 </body>
