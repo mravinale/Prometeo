@@ -4,7 +4,7 @@
  * License: MIT
  */
 (function(window) {
-'use strict';
+    'use strict';
 
 /**
  * JSTestDriver adapter for angular scenario tests
@@ -47,7 +47,7 @@
  * @const
  * @see jstestdriver.TestCaseInfo
  */
-var SCENARIO_TYPE = 'scenario';
+    var SCENARIO_TYPE = 'scenario';
 
 /**
  * Plugin for JSTestDriver
@@ -55,16 +55,18 @@ var SCENARIO_TYPE = 'scenario';
  *
  * @see jstestdriver.PluginRegistrar
  */
-function JstdPlugin() {
-  var nop = function() {};
 
-  this.reportResult = nop;
-  this.reportEnd = nop;
-  this.runScenario = nop;
+    function JstdPlugin() {
+        var nop = function() {
+        };
 
-  this.name = 'Angular Scenario Adapter';
+        this.reportResult = nop;
+        this.reportEnd = nop;
+        this.runScenario = nop;
 
-  /**
+        this.name = 'Angular Scenario Adapter';
+
+        /**
    * Called for each JSTD TestCase
    *
    * Handles only SCENARIO_TYPE test cases. There should be only one fake TestCase.
@@ -75,25 +77,26 @@ function JstdPlugin() {
    * @param {Function} onAllTestsComplete
    * @returns {boolean} True if this type of test is handled by this plugin, false otherwise
    */
-  this.runTestConfiguration = function(configuration, onTestDone, onAllTestsComplete) {
-    if (configuration.getTestCaseInfo().getType() != SCENARIO_TYPE) return false;
+        this.runTestConfiguration = function(configuration, onTestDone, onAllTestsComplete) {
+            if (configuration.getTestCaseInfo().getType() != SCENARIO_TYPE) return false;
 
-    this.reportResult = onTestDone;
-    this.reportEnd = onAllTestsComplete;
-    this.runScenario();
+            this.reportResult = onTestDone;
+            this.reportEnd = onAllTestsComplete;
+            this.runScenario();
 
-    return true;
-  };
+            return true;
+        };
 
-  this.getTestRunsConfigurationFor = function(testCaseInfos, expressions, testRunsConfiguration) {
-    testRunsConfiguration.push(
-        new jstestdriver.TestRunConfiguration(
-            new jstestdriver.TestCaseInfo(
-                'Angular Scenario Tests', function() {}, SCENARIO_TYPE), []));
+        this.getTestRunsConfigurationFor = function(testCaseInfos, expressions, testRunsConfiguration) {
+            testRunsConfiguration.push(
+                new jstestdriver.TestRunConfiguration(
+                    new jstestdriver.TestCaseInfo(
+                        'Angular Scenario Tests', function() {
+                        }, SCENARIO_TYPE), []));
 
-    return true;
-  };
-}
+            return true;
+        };
+    }
 
 /**
  * Singleton instance of the plugin
@@ -101,7 +104,7 @@ function JstdPlugin() {
  *  - jstd output (reports to this plugin)
  *  - initScenarioAdapter (register the plugin to jstd)
  */
-var plugin = new JstdPlugin();
+    var plugin = new JstdPlugin();
 
 /**
  * Initialise scenario jstd-adapter
@@ -112,13 +115,14 @@ var plugin = new JstdPlugin();
  * @param {Object=} config Configuration object, supported properties:
  *  - relativeUrlPrefix: prefix for all relative links when navigateTo()
  */
-function initScenarioAdapter(jstestdriver, initScenarioAndRun, config) {
-  if (jstestdriver) {
-    // create and register ScenarioPlugin
-    jstestdriver.pluginRegistrar.register(plugin);
-    plugin.runScenario = initScenarioAndRun;
 
-    /**
+    function initScenarioAdapter(jstestdriver, initScenarioAndRun, config) {
+        if (jstestdriver) {
+            // create and register ScenarioPlugin
+            jstestdriver.pluginRegistrar.register(plugin);
+            plugin.runScenario = initScenarioAndRun;
+
+            /**
      * HACK (angular.scenario.Application.navigateTo)
      *
      * We need to navigate to relative urls when running from browser (without JSTD),
@@ -130,20 +134,20 @@ function initScenarioAdapter(jstestdriver, initScenarioAndRun, config) {
      *
      * So this hack is applied only if running with JSTD and change all relative urls to absolute.
      */
-    var appProto = angular.scenario.Application.prototype,
-        navigateTo = appProto.navigateTo,
-        relativeUrlPrefix = config && config.relativeUrlPrefix || '/';
+            var appProto = angular.scenario.Application.prototype,
+                navigateTo = appProto.navigateTo,
+                relativeUrlPrefix = config && config.relativeUrlPrefix || '/';
 
-    appProto.navigateTo = function(url, loadFn, errorFn) {
-      if (url.charAt(0) != '/' && url.charAt(0) != '#' &&
-          url != 'about:blank' && !url.match(/^https?/)) {
-        url = relativeUrlPrefix + url;
-      }
+            appProto.navigateTo = function(url, loadFn, errorFn) {
+                if (url.charAt(0) != '/' && url.charAt(0) != '#' &&
+                    url != 'about:blank' && !url.match(/^https?/)) {
+                    url = relativeUrlPrefix + url;
+                }
 
-      return navigateTo.call(this, url, loadFn, errorFn);
-    };
-  }
-}
+                return navigateTo.call(this, url, loadFn, errorFn);
+            };
+        }
+    }
 
 /**
  * Builds proper TestResult object from given model spec
@@ -153,33 +157,34 @@ function initScenarioAdapter(jstestdriver, initScenarioAndRun, config) {
  * @param {angular.scenario.ObjectModel.Spec} spec
  * @returns {jstestdriver.TestResult}
  */
-function createTestResultFromSpec(spec) {
-  var map = {
-    success: 'PASSED',
-    error:   'ERROR',
-    failure: 'FAILED'
-  };
 
-  return new jstestdriver.TestResult(
-    spec.fullDefinitionName,
-    spec.name,
-    jstestdriver.TestResult.RESULT[map[spec.status]],
-    spec.error || '',
-    spec.line || '',
-    spec.duration);
-}
+    function createTestResultFromSpec(spec) {
+        var map = {
+            success: 'PASSED',
+            error: 'ERROR',
+            failure: 'FAILED'
+        };
+
+        return new jstestdriver.TestResult(
+            spec.fullDefinitionName,
+            spec.name,
+            jstestdriver.TestResult.RESULT[map[spec.status]],
+            spec.error || '',
+            spec.line || '',
+            spec.duration);
+    }
 
 /**
  * Generates JSTD output (jstestdriver.TestResult)
  */
-angular.scenario.output('jstd', function(context, runner, model) {
-  model.on('SpecEnd', function(spec) {
-    plugin.reportResult(createTestResultFromSpec(spec));
-  });
+    angular.scenario.output('jstd', function(context, runner, model) {
+        model.on('SpecEnd', function(spec) {
+            plugin.reportResult(createTestResultFromSpec(spec));
+        });
 
-  model.on('RunnerEnd', function() {
-    plugin.reportEnd();
-  });
-});
-initScenarioAdapter(window.jstestdriver, angular.scenario.setUpAndRun, window.jstdScenarioAdapter);
+        model.on('RunnerEnd', function() {
+            plugin.reportEnd();
+        });
+    });
+    initScenarioAdapter(window.jstestdriver, angular.scenario.setUpAndRun, window.jstdScenarioAdapter);
 })(window);

@@ -2,17 +2,10 @@ var app = angular.module('Prometeo', ['ui', '$strap.directives']);
 
 app.config(function ($routeProvider) {
     $routeProvider
-        .when('/home', { templateUrl: 'App/partials/home.html', controller: 'homeController' })
-        .when('/blog', { templateUrl: 'App/partials/blog.html', controller: 'blogController' })
+        .when('/blog', { templateUrl: 'App/partials/blog.html', controller: 'blogController' })  
         .when('/about', { templateUrl: 'App/partials/about.html', controller: 'aboutController' })
-        .otherwise({ redirectTo: '/home' });
+        .otherwise({ redirectTo: '/blog' });
     
-});
-
-app.value('ui.config', {
-    jq: {
-        cslider: { autoplay: true, bgincrement: 450 }
-    }
 });
 
 app.controller('mainController', function ($scope, $location, dataservice) {
@@ -21,13 +14,9 @@ app.controller('mainController', function ($scope, $location, dataservice) {
     
     dataservice.onEntityChange(function (args) {
         $scope.$apply();
-       // console.log(args);
     });
 });
 
-app.controller('homeController', function ($scope) {
-     
-});
 
 app.controller('blogController', function ($scope, breeze, dataservice) {
 
@@ -38,6 +27,7 @@ app.controller('blogController', function ($scope, breeze, dataservice) {
     
     hub.client.changePage = function (message) {
         pageEntity.title = message.Content;
+        
     };
 
     hub.client.changePostNames = function (message) {
@@ -79,8 +69,9 @@ app.controller('blogController', function ($scope, breeze, dataservice) {
    
 });
 
+
 app.controller('aboutController', function ($scope) {
-    
+
 });
 
 app.value('breeze', window.breeze);

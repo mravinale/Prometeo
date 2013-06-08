@@ -35,13 +35,13 @@
  * touch them at your own risk.
  */
 //#endregion
-(function (breeze, Q) {
+(function(breeze, Q) {
     var EntityManager = breeze.EntityManager;
 
     /**
     Enable (default) or disable "Save Queuing" for this manager
     **/
-    EntityManager.prototype.enableSaveQueuing = function (enable) {
+    EntityManager.prototype.enableSaveQueuing = function(enable) {
         enable = enable === undefined ? true : enable;
         if (!this._saveQueuing) {
             this._saveQueuing = new SaveQueuing(this);
@@ -54,20 +54,21 @@
     };
 
 
-    var SaveQueuing = function (entityManager) {
+    var SaveQueuing = function(entityManager) {
         this.entityManager = entityManager;
         this.baseSaveChanges = entityManager.saveChanges;
         this.isSaving = false;
         this.saveQueue = [];
     };
 
-    SaveQueuing.prototype.isEnabled = function () {
+    SaveQueuing.prototype.isEnabled = function() {
         return this.entityManager.saveChanges === saveChangesWithQueuing;
     };
 
     /**
     Replacement for EntityManager.saveChanges, extended with "Save Queuing"
     **/
+
     function saveChangesWithQueuing() {
         var saveQueuing = this._saveQueuing;
         var args = [].slice.call(arguments);
@@ -82,7 +83,7 @@
         }
     }
 
-    SaveQueuing.prototype.queueSaveChanges = function (args) {
+    SaveQueuing.prototype.queueSaveChanges = function(args) {
         var self = this;
         var deferredSave = Q.defer();
         self.saveQueue.push(deferredSave);
@@ -93,15 +94,15 @@
 
         var savePromise = deferredSave.promise;
         return savePromise
-            .then(function () { return self.innerSaveChanges(args); })
-            .fail(function (error) { self.saveFailed(error); });
+            .then(function() { return self.innerSaveChanges(args); })
+            .fail(function(error) { self.saveFailed(error); });
     };
 
-    SaveQueuing.prototype.innerSaveChanges = function (args) {
+    SaveQueuing.prototype.innerSaveChanges = function(args) {
         var self = this;
         return self.baseSaveChanges.apply(self.entityManager, args)
-            .then(function (saveResult) { return self.saveSucceeded(saveResult); })
-            .fail(function (error) { self.saveFailed(error); });
+            .then(function(saveResult) { return self.saveSucceeded(saveResult); })
+            .fail(function(error) { self.saveFailed(error); });
     };
 
     // Default methods and Error class for initializing new saveQueuing objects
@@ -119,7 +120,9 @@
             saveQueuing.isSaving = false;
         }
         return saveResult;
-    };
+    }
+
+    ;
 
     function defaultSaveFailed(error) {
         var saveQueuing = this;
@@ -135,6 +138,7 @@
 
     //#region QueuedSaveFailedError
     //Custom Error sub-class; thrown when rejecting queued saves.
+
     function QueuedSaveFailedError(errObject) {
         this.name = "QueuedSaveFailedError";
         this.message = "Queued save failed";
