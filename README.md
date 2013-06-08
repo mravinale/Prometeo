@@ -1,4 +1,4 @@
 Prometeo
 =============
 
-A SPA using javascript Angular framework , [take a look](http://prometeo.apphb.com/)
+A Poc that uses BreezJs, AngularJS and SignalR, [take a look](http://prometeo.apphb.com/)
